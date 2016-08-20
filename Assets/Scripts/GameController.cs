@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameController : MonoBehaviour 
@@ -17,6 +18,8 @@ public class GameController : MonoBehaviour
 
 	public AzarashiController azarashi;
 	public GameObject blocks;
+	public Text scoreLabel;
+	public Text stateLabel;
 
 	void Start () 
 	{
@@ -60,6 +63,12 @@ public class GameController : MonoBehaviour
 		// 各オブジェクトを無効状態にする
 		azarashi.SetSteerActive(false);
 		blocks.SetActive(false);
+
+		// ラベルを更新
+		scoreLabel.text = "Score : " + 0;
+
+		stateLabel.gameObject.SetActive(true);
+		stateLabel.text = "Ready";
 	}
 
 	void GameStart()
@@ -72,6 +81,10 @@ public class GameController : MonoBehaviour
 
 		// 最初の入力だけゲームコントローラーから渡す
 		azarashi.Flap();
+
+		// ラベルを更新
+		stateLabel.gameObject.SetActive(false);
+		stateLabel.text = "";
 	}
 
 	void GameOver()
@@ -86,6 +99,10 @@ public class GameController : MonoBehaviour
 		{
 			so.enabled = false;
 		}
+
+		// ラベルを更新
+		stateLabel.gameObject.SetActive(true);
+		stateLabel.text = "GameOver";
 	}
 
 	void Reload()
@@ -97,6 +114,7 @@ public class GameController : MonoBehaviour
 	public void IncreaseScore()
 	{
 		score++;
+		scoreLabel.text = "Score : " + score;
 	}
 
 }
